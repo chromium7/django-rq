@@ -33,8 +33,8 @@ class DjangoWorkerPool(WorkerPool):
 def run_django_worker(*args: Any, **kwargs: Any) -> None:
     # multiprocessing library default process start method may be
     # `spawn` or `fork` depending on the host OS
-    # if get_start_method() == 'spawn':
-    #     django.setup()
-    reset_db_connections()
+    if get_start_method() == 'spawn':
+        django.setup()
 
+    reset_db_connections()
     run_worker(*args, **kwargs)
