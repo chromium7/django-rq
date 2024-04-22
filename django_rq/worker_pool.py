@@ -3,6 +3,7 @@ from multiprocessing import Process, get_start_method
 from typing import Any
 
 from rq.worker_pool import WorkerPool, run_worker
+from django_rq.utils import reset_db_connections
 
 
 class DjangoWorkerPool(WorkerPool):
@@ -32,7 +33,8 @@ class DjangoWorkerPool(WorkerPool):
 def run_django_worker(*args: Any, **kwargs: Any) -> None:
     # multiprocessing library default process start method may be
     # `spawn` or `fork` depending on the host OS
-    if get_start_method() == 'spawn':
-        django.setup()
+    # if get_start_method() == 'spawn':
+    #     django.setup()
+    reset_db_connections()
 
     run_worker(*args, **kwargs)
