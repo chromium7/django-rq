@@ -1,3 +1,4 @@
+import multiprocessing as mp
 import os
 import sys
 
@@ -97,4 +98,5 @@ class Command(BaseCommand):
             worker_class=worker_class,
             job_class=job_class,
         )
+        mp.set_start_method('fork', force=True)
         pool.start(burst=options.get('burst', False), logging_level=logging_level)

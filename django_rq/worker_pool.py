@@ -36,5 +36,4 @@ def run_django_worker(*args: Any, **kwargs: Any) -> None:
     if get_start_method() == 'spawn':
         django.setup()
 
-    reset_db_connections()
     run_worker(*args, **kwargs)
